@@ -4,7 +4,7 @@ This action was inspired by  [`Azure Storage Action`](https://github.com/lauchac
 
 # Deploy Files to Azure Blob Storage
 
-With [`Azure Static Website Action`](https://github.com/tibor19/static-website-deploy), you can automate your workflow to deploy files to [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
+With [`Azure Static Website Action with cache`](https://github.com/gprashanthkumar/static-website-deploy_with_Cache), you can automate your workflow to deploy files to [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/)
 
 
 # End-to-End Sample Workflows
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
     - uses: actions/checkout@v2
-    - uses: tibor19/static-website-deploy@v1
+    - uses: gprashanthkumar/static-website-deploy_with_cache@v2
       with:
         enabled-static-website: 'true'
         folder: 'MyFolder'

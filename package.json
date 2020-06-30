@@ -1,5 +1,5 @@
 {
-  "name": "static-website-deploy",
+  "name": "static-website-deploy_with_cache",
   "version": "1.0.0",
   "description": "With this action, you can automate your workflow to deploy files to Azure Storage Account",
   "main": "lib/index.js",
@@ -9,23 +9,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tibor19/static-website-deploy.git"
+    "url": "git+https://github.com/gprashanthkumar/static-website-deploy_with_cache.git"
   },
-  "author": {
-    "name": "Tiberiu Covaci",
-    "url": "https://github.com/tibor19"
-  },
+  "author": "Prashanth kumar Garlapally (https://github.com/gprashanthkumar)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tibor19/static-website-deploy/issues"
+    "url": "https://github.com/gprashanthkumar/static-website-deploy_with_Cache/issues"
   },
-  "homepage": "https://github.com/tibor19/static-website-deploy#readme",
+  "homepage": "https://github.com/gprashanthkumar/static-website-deploy#readme",
   "dependencies": {
-    "@actions/core": "^1.2.0",
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^4.0.0",
     "@azure/storage-blob": "^12.1.1",
     "mime-types": "^2.1.26"
   },
   "devDependencies": {
     "@zeit/ncc": "0.22.1"
-  }
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": []
 }
