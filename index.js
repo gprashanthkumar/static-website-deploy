@@ -32,15 +32,13 @@ async function uploadFileToBlob(containerService, fileName, blobName) {
     var blobClient = containerService.getBlockBlobClient(blobName);
     var blobContentType = lookup(fileName) || 'application/octet-stream';
     var _blobCacheControl = 'public,max-age=500';
-    var _blobHTTPHeader = {
+    var _blobHTTPHeader = JSON.stringify({
         blobContentType: { blobContentType },
         blobCacheControl: { _blobCacheControl }
-    };
+    });
+    console.log("_blobHTTPHeader" + _blobHTTPHeader + "\n");
     await blobClient.uploadFile(fileName, {
-        blobHTTPHeaders: {
-            blobContentType: { blobContentType },
-            blobCacheControl: { _blobCacheControl }
-        }
+        blobHTTPHeaders: _blobHTTPHeader
     });
 
     console.log(`The file ${fileName} was uploaded as ${blobName}, with the content-type of ${blobContentType} and Cache-Control: ${_blobCacheControl} .`);
