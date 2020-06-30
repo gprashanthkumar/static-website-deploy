@@ -38,7 +38,8 @@ async function uploadFileToBlob(containerService, fileName, blobName) {
     });
     console.log("_blobHTTPHeader" + _blobHTTPHeader + "\n");
     await blobClient.uploadFile(fileName, {
-        blobHTTPHeaders: _blobHTTPHeader
+        blobContentType: { blobContentType },
+        blobCacheControl: { _blobCacheControl }
     });
 
     console.log(`The file ${fileName} was uploaded as ${blobName}, with the content-type of ${blobContentType} and Cache-Control: ${_blobCacheControl} .`);
