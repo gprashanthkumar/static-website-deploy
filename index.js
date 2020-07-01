@@ -6,6 +6,8 @@ const { lookup } = require('mime-types');
 const { getInput, setFailed } = require('@actions/core');
 const { BlobServiceClient } = require('@azure/storage-blob');
 
+
+
 async function* listFiles(rootFolder) {
 
     const readdir = promisify(fs.readdir);
@@ -38,11 +40,10 @@ async function uploadFileToBlob(containerService, fileName, blobName) {
 
     var blobContentType = lookup(fileName) || 'application/octet-stream';
     var blobCacheControl = 'public,max-age=500';
-    var _blobHTTPHeader = JSON.stringify([
-        { blobContentType },
-        { blobCacheControl }
-    ]);
-    console.log("_blobHTTPHeader ->" + _blobHTTPHeader + "\n");
+    const blobOptions = { blobHTTPHeaders: { blobContentType: blobContentType } };
+
+
+    //console.log("_blobHTTPHeader ->" + blobHTTPHeaders + "\n");
     // await blobClient.uploadFile(fileName, {
     //     blobContentType: { blobContentType },
     //     blobCacheControl: { _blobCacheControl }
@@ -56,12 +57,9 @@ async function uploadFileToBlob(containerService, fileName, blobName) {
     // });
 
 
-    console.log(JSON.stringify([{ blobContentType }, "'blobCacheControl' : 'public,max-age=500'"]));
-    await blobClient.uploadFile(fileName, [
+    console.log(JSON.stringify(blobOptions) + "\n");
 
-        { blobContentType }, "'blobCacheControl' : 'public,max-age=500'"
-
-    ]);
+    await blobClient.uploadFile(fileName, blobOptions);
 
     console.log(`The file ${fileName} was uploaded as ${blobName}, with the content-type of ${blobContentType} and Cache-Control: ${blobCacheControl} .`);
 }
