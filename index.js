@@ -46,10 +46,16 @@ async function uploadFileToBlob(containerService, fileName, blobName) {
     //     blobCacheControl: { _blobCacheControl }
     // });
 
+    // await blobClient.uploadFile(fileName, {
+    //     blobHTTPHeaders: [
+    //         { blobContentType },
+    //         { blobCacheControl }
+    //     ]
+    // });
+
     await blobClient.uploadFile(fileName, {
         blobHTTPHeaders: [
-            { blobContentType },
-            { blobCacheControl }
+            { blobContentType }
         ]
     });
 
