@@ -92,13 +92,14 @@ const main = async () => {
         await containerService.setAccessPolicy(accessPolicy);
     }
 
-    if (removeExistingFiles) {
+    if ((removeExistingFiles ==='true') || (removeExistingFiles ==='True') ) {
+        console.log("Action Delete existing files: " + removeExistingFiles);
         for await (const blob of containerService.listBlobsFlat()) {
             await containerService.deleteBlob(blob.name);
             console.log("Deletig blob file"+ blob.name);
         }
     } else{
-        console.log("Not removing existing files!!!");
+        console.log("Not removing existing files!!!" + removeExistingFiles);
     }
 
     const rootFolder = path.resolve(folder);
