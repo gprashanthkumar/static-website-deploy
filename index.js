@@ -95,7 +95,10 @@ const main = async () => {
     if (removeExistingFiles) {
         for await (const blob of containerService.listBlobsFlat()) {
             await containerService.deleteBlob(blob.name);
+            console.log("Deletig blob file"+ blob.name);
         }
+    } else{
+        console.log("Not removing existing files!!!");
     }
 
     const rootFolder = path.resolve(folder);
