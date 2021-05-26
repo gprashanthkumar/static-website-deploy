@@ -1,4 +1,5 @@
 const fs = require('fs');
+const readline = require('readline');
 const path = require('path');
 const { promisify } = require('util');
 const { lookup } = require('mime-types');
@@ -49,6 +50,29 @@ async function uploadFileToBlob(containerService, fileName, blobName) {
     console.log(`The file ${fileName} was uploaded as ${blobName}, with the content-type of ${blobContentType} and Cache-Control: ${blobCacheControl} .`);
 }
 
+async function processLineByLine(containerService,removeListFile) {
+    const fileStream = fs.createReadStream('deletedfiles.txt');
+  
+    const rl = readline.createInterface({
+      input: fileStream,
+      crlfDelay: Infinity
+    });
+    // Note: we use the crlfDelay option to recognize all instances of CR LF
+    // ('\r\n') in input.txt as a single line break.
+  
+    for await (const _line of rl) {
+      // Each line in input.txt will be successively available here as `line`.
+      console.log(`Line from file: ${_line}`);
+      for await (const blob of containerService.listBlobsFlat()) {
+                if (_line.trim() == blob.name.trim()){
+                await containerService.deleteBlob(blob.name);
+                console.log("Deleting specific blob file-->"+ blob.name);
+                }
+                
+        }
+    }
+  }
+
 const main = async () => {
 
     const connectionString = getInput('connection-string');
@@ -67,6 +91,7 @@ const main = async () => {
     const indexFile = getInput('index-file') || 'index.html';
     const errorFile = getInput('error-file');
     const removeExistingFiles = getInput('remove-existing-files');
+    const removeListFile = getInput('remove-files-listfile');
 
     const blobServiceClient = await BlobServiceClient.fromConnectionString(connectionString);
 
@@ -96,10 +121,13 @@ const main = async () => {
         console.log("Action Delete existing files: " + removeExistingFiles);
         for await (const blob of containerService.listBlobsFlat()) {
             await containerService.deleteBlob(blob.name);
-            console.log("Deletig blob file"+ blob.name);
+            console.log("Deleting blob file"+ blob.name);
         }
     } else{
-        console.log("Not removing existing files!!!" + removeExistingFiles);
+        console.log("Not removing all existing files!!!" + removeExistingFiles);
+        if (removeListFile != "") {
+            processLineByLine(containerService,removeListFile)
+        }
     }
 
     const rootFolder = path.resolve(folder);
