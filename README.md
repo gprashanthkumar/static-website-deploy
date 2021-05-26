@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
     - uses: actions/checkout@v2
-    - uses: gprashanthkumar/static-website-deploy_with_cache@v2
+    - uses: gprashanthkumar/static-website-deploy_with_cache@v6
       with:
         enabled-static-website: 'true'
         folder: 'MyFolder'
